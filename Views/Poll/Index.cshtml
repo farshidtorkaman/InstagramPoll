@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<style>
+    .loader {
+        border: 3px solid #f3f3f3; /* Light grey */
+        border-top: 3px solid #000; /* Blue */
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin .7s linear infinite;
+        -webkit-animation: spin .7s linear infinite; /* Safari */
+        float: right;
+    }
+
+
+    /* Safari */
+    @@-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .custom-scrollbar {
+        position: relative;
+        height: 500px;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+</style>
+
+
+
+<form asp-action="GetMedia" data-ajax="true" data-ajax-method="Post"
+      data-ajax-begin="BeginMediaReport"
+      data-ajax-complete="CompleteMediaReport"
+      data-ajax-success="SuccessMediaReport"
+      data-ajax-update="#ReportSection">
+    <div class="form-group">
+        <label for="mediaUrl">آدرس URL پست</label>
+        <input type="text" class="form-control" id="mediaUrl" name="mediaUrl">
+        <span id="MediaUrlSpan" class="text text-danger"></span>
+    </div>
+    <button type="submit" id="btnSubmitReport" class="btn btn-success mt-0">بررسی </button>
+
+</form>
+
+<div class="card mt-3" id="ReportSection" style="width: 26rem;">
+    @*<div class="card-body">
+        <h5 class="card-title">گزارش</h5>
+        <p><span class="card-text ml-4">تعداد کل کامنت : </span> <span class="mr-5"> 0</span></p>
+        <p><span class="card-text ml-5">تعداد لایک : </span> <span class="mr-5"> 0</span></p>
+
+        <div class="row mt-1">
+            <div class="col-6">
+                <a href="#" class="btn btn-primary btn-sm">دریافت لایک کنندگان</a>
+            </div>
+            <div class="col-6">
+                <a href="#" class="btn btn-primary btn-sm">دریافت کامنت ها </a>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+<div class="row mt-4" id="ResultSection">
+
+   
+</div>
+
+@section Scripts{
+    <script>
+        function Loading(flag, element) {
+            if (flag == true) {
+                $(".btn").attr("disabled", true);
+                $("#" + element).append("<div class='loader ml-2'></div>");
+            }
+            else {
+                $(".loader").remove();
+                $(".btn").attr("disabled", false);
+            }
+        }
+
+        function BeginMediaReport() {
+            $("#MediaUrlSpan").html("");
+            Loading(true, "btnSubmitReport");
+            if ($("#mediaUrl").val() == "") {
+                $("#MediaUrlSpan").html("این فیلد نباید خالی باشد");
+                Loading(false, "btnSubmitReport");
+                return false;
+            }
+            $("#ReportSection").empty();
+            $("#ResultSection").empty();
+        }
+
+        function CompleteMediaReport() {
+            Loading(false);
+        }
+
+        function SuccessMediaReport(data) {
+            if (!data.success)
+                $("#MediaUrlSpan").html(data.message);
+        }
+    </script>
+}

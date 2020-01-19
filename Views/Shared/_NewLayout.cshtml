@@ -1,0 +1,106 @@
+﻿
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD-->
+<head>
+
+    <meta charset="UTF-8" />
+    <title>پنل مدیریت</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!--[if IE]>
+       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+       <![endif]-->
+    @*<link rel="stylesheet" href="~/Content/Panel/assets/plugins/bootstrap/css/bootstrap.rtl.css" />*@
+    @*<link rel="stylesheet" href="~/Content/Panel/assets/css/main.css" />*@
+    @*<link rel="stylesheet" href="~/Content/Panel/assets/css/theme.css" />*@
+    @*<link rel="stylesheet" href="~/Content/Panel/assets/css/MoneAdmin.css" />*@
+    
+    @*<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.bootstrap.min.css" />*@
+    <link href="~/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-rtl.css" rel="stylesheet" />
+    <link href="~/css/font-style.css" rel="stylesheet" />
+    <link href="~/css/style-panel.css" rel="stylesheet" />
+    <!--END GLOBAL STYLES -->
+    <!-- PAGE LEVEL STYLES -->
+    <!-- END PAGE LEVEL  STYLES -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        nav{
+            background-color: ;
+        }
+    </style>
+</head>
+<!-- END  HEAD-->
+<!-- BEGIN BODY-->
+<body>
+
+    <!-- MAIN WRAPPER -->
+
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav float-right">
+                    <li class="nav-item @(Context.Request.Path == "/Poll" || Context.Request.Path == "/" ? "active" : "")">
+                        <a class="nav-link" asp-action="Index" asp-controller="Poll">خانه </a>
+                    </li>
+                    <li class="nav-item @(Context.Request.Path == "/ManageAccount" ? "active" : "")">
+                        <a class="nav-link" asp-action="Index" asp-controller="ManageAccount">مدیریت اکانت </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main class="page-content mt-3">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </main>
+        <div class="mt-5"></div>
+        <!-- page-content" -->
+    </div>
+    <!-- page-wrapper -->
+    <!--END MAIN WRAPPER -->
+    <!-- FOOTER -->
+    <div id="footer">
+
+    </div>
+    <!--END FOOTER -->
+    <!-- GLOBAL SCRIPTS -->
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.validate.js"></script>
+
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.js"></script>
+
+    <script src="~/js/modernizr-2.6.2.js"></script>
+    <script src="~/js/plugin.js"></script>
+    @*<script src="~/Scripts/bootstrap.js"></script>*@
+    <script src="~/js/PersianDatePicker.min.js"></script>
+    @*<script src="~/Content/js/jquery-3.3.1.min.js"></script>*@
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/script-panel.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/lib/Table2Excel/jquery.table2excel.min.js"></script>
+    @RenderSection("scripts", required: false)
+   
+   
+    <!-- END GLOBAL SCRIPTS -->
+</body>
+<!-- END BODY-->
+
+</html>

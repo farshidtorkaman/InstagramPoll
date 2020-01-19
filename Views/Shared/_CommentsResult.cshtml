@@ -1,0 +1,94 @@
+﻿@model IEnumerable<InstagramPoll.Models.CommentViewModel>
+
+<div class="col-6">
+    <form id="formComment" asp-action="Roll" asp-controller="Poll"
+          data-ajax="true"
+          data-ajax-method="Post"
+          data-ajax-begin="BeginMethod"
+          data-ajax-complete="CompleteMethod"
+          data-ajax-success="SuccessMethod">
+        <div class="form-group">
+            <label for="rightAnswer">جواب درست</label>
+            <input type="text" class="form-control" id="rightAnswer" name="rightAnswer">
+        </div>
+        <div class="form-group">
+            <label for="acceptableMentions">تعداد منشن های مورد قبول</label>
+            <input type="number" class="form-control" id="acceptableMentions" name="acceptableMentions">
+        </div>
+        <div class="form-group">
+            <label for="acceptablePersons">تعداد افراد مورد قبول</label>
+            <input type="number" class="form-control" id="acceptablePersons" name="acceptablePersons">
+        </div>
+        <div class="form-group mr-3">
+            @*<input class="form-check-input" type="checkbox" value="" id="repeatableMention" name="repeatableMention">*@
+            @Html.CheckBox("repeatableMention", new { @class = "form-check-input", @id = "repeatableMention" })
+            <label class="form-check-label" for="repeatableMention">
+                منشن تکراری مورد قبول است
+            </label>
+        </div>
+        <div class="form-group mr-3">
+            @*<input class="form-check-input" type="checkbox" value="" id="repeatableAnswer" name="repeatableAnswer">*@
+            @Html.CheckBox("repeatableAnswer", new { @class = "form-check-input", @id = "repeatableAnswer" })
+            <label class="form-check-label" for="repeatableAnswer">
+                جواب تکراری مورد قبول است
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary" id="btnSubmitRoll">قرعه کشی</button>
+        <button type="button" class="btn btn-primary commentsExcel">خروجی اکسل</button>
+    </form>
+</div>
+<div class="col-6 mt-4">
+    <div class="table-wrapper-scroll-y custom-scrollbar">
+        <table class="table table-bordered table-striped" id="commentsTable">
+            <thead>
+                <tr>
+                    <th scope="col">شناسه کامنت</th>
+                    <th scope="col">نام کاربری</th>
+                    <th scope="col">متن کامنت</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.PK</th>
+                        <td>@item.UserName</td>
+                        <td>@item.Text</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    function BeginMethod() {
+        Loading(true, "btnSubmitRoll");
+    }
+    function CompleteMethod() {
+        Loading(false, "btnSubmitRoll");
+    }
+    function SuccessMethod(data) {
+        $(".alert").remove();
+        $("#formComment").append("<div class='alert alert-success mt-3' role='alert'>برنده ی قرعه کشی : " + data.result + "</div>")
+    }
+</script>
+
+<script>
+    $(".commentsExcel").click(function () {
+        $("#commentsTable").table2excel({
+            // exclude CSS class
+            exclude: ".noExl",
+            name: "Worksheet Name",
+            filename: "Comments List", //do not include extension
+            fileext: ".xls" // file extension
+        });
+
+    });
+</script>
+
+

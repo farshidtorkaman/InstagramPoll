@@ -1,0 +1,75 @@
+﻿@model IEnumerable<InstagramPoll.Models.LikerViewModel>
+
+    <div class="col-6">
+        <form id="formLike" asp-action="RollForLike" asp-controller="Poll"
+              data-ajax="true"
+              data-ajax-method="Post"
+              data-ajax-begin="BeginMethod"
+              data-ajax-complete="CompleteMethod"
+              data-ajax-success="SuccessMethod">
+
+
+            <div class="form-group">
+                <label for="acceptablePersons">تعداد افراد مورد قبول</label>
+                <input type="number" class="form-control" id="acceptablePersons" name="acceptablePersons">
+            </div>
+
+
+            <button type="submit" class="btn btn-primary" id="btnSubmitRoll">قرعه کشی</button>
+            <button type="button" class="btn btn-primary commentsExcel">خروجی اکسل</button>
+
+            @*<button type="button" id="btnRoll" class="btn btn-primary">قرعه کشی</button>
+            <button type="button" class="btn btn-primary likersExcel">خروجی اکسل</button>*@
+        </form>
+
+       
+
+    </div>
+<div class="col-6 mt-4">
+    <div class="table-wrapper-scroll-y custom-scrollbar">
+        <table class="table table-bordered table-striped mb-0" id="likersTable">
+            <thead>
+                <tr>
+                    <th scope="col">شناسه کاربری</th>
+                    <th scope="col">نام کاربری</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.PK</th>
+                        <td>@item.UserName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    function BeginMethod() {
+        Loading(true, "btnSubmitRoll");
+    }
+    function CompleteMethod() {
+        Loading(false, "btnSubmitRoll");
+    }
+    function SuccessMethod(data) {
+        $(".alert").remove();
+        $("#formLike").append("<div class='alert alert-success mt-3' role='alert'>برنده ی قرعه کشی : " + data.result + "</div>")
+    }
+</script>
+
+<script>
+    $(".likersExcel").click(function () {
+        $("#likersTable").table2excel({
+            // exclude CSS class
+            exclude: ".noExl",
+            name: "Worksheet Name",
+            filename: "Likers List", //do not include extension
+            fileext: ".xls" // file extension
+        });
+
+    });
+</script>

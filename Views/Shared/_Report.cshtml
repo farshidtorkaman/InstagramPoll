@@ -1,0 +1,54 @@
+﻿@model InstagramPoll.Models.ReportViewModel
+
+    <div class="card-body">
+        <h5 class="card-title">گزارش</h5>
+        <p><span class="card-text ml-4">تعداد کل کامنت : </span> <span class="mr-5"> @Model.CommentsCount</span></p>
+        <p><span class="card-text ml-5">تعداد لایک : </span> <span class="mr-5"> @Model.LikesCount</span></p>
+
+        <div class="row mt-1">
+            <div class="col-6">
+                <a asp-action="GetLikes" asp-controller="Poll" asp-route-mediaId="@Model.MediaId" id="btnGetLike"
+                   data-ajax="true"
+                   data-ajax-begin="BeginGetLikeMethod"
+                   data-ajax-complete="CompleteMethod"
+                   data-ajax-method="Post"
+                   data-ajax-update="#ResultSection"
+                   class="btn btn-primary btn-sm">دریافت لایک کنندگان</a>
+            </div>
+            <div class="col-6">
+                <a asp-action="GetComments" asp-controller="Poll" asp-route-mediaId="@Model.MediaId" id="btnGetComment"
+                   data-ajax="true"
+                   data-ajax-begin="BeginGetCommentMethod"
+                   data-ajax-complete="CompleteMethod"
+                   data-ajax-method="Post"
+                   data-ajax-update="#ResultSection"
+                   class="btn btn-primary btn-sm">دریافت کامنت ها</a>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function BeginGetLikeMethod() {
+        $("#ResultSection").empty();
+        Loading(true, "btnGetLike");
+        if ($("#mediaUrl").val() == "") {
+            $("#MediaUrlSpan").html("این فیلد نباید خالی باشد");
+            Loading(false, "btnGetLike");
+            return false;
+        }
+    }
+    function BeginGetCommentMethod() {
+        $("#ResultSection").empty();
+        Loading(true, "btnGetComment");
+        if ($("#mediaUrl").val() == "") {
+            $("#MediaUrlSpan").html("این فیلد نباید خالی باشد");
+            Loading(false, "btnGetComment");
+            return false;
+        }
+    }
+
+    function CompleteMethod() {
+        Loading(false, "btnGetComment");
+        Loading(false, "btnGetLike");
+    }
+</script>

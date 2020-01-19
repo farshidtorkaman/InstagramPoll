@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "ChallengeRequired";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<style>
+    .form-check {
+        margin: 10px;
+    }
+</style>
+
+<form asp-action="ChallengeRequired">
+    <p>اکانت شما باید از طرف اینستاگرام تایید شود. لطفا یکی از راه های زیر برای دریافت کد انتخاب کنید</p>
+    @if (ViewBag.PhoneNumberAvailable == true)
+    {
+        <div class="form-check">
+            @*<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">*@
+            @Html.RadioButton("sendCodeMethod", "phone", new { @class = "form-check-input" })
+            <label class="form-check-label" for="exampleRadios1">
+                @ViewBag.PhoneNumber
+            </label>
+        </div>
+    }
+    @if (ViewBag.EmailAvailable == true)
+    {
+        <div class="form-check">
+            @Html.RadioButton("sendCodeMethod", "email", new { @class = "form-check-input" })
+            <label class="form-check-label" for="exampleRadios1">
+                @ViewBag.Email
+            </label>
+        </div>
+    }
+    <button type="submit" class="btn btn-success mt-0">مرحله بعد </button>
+    <div>
+        <span class="text text-danger">@ViewData["ErrorMessage"]</span>
+    </div>
+</form>

@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "VerifyChallenge";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<form asp-action="VerifyChallenge">
+    <p>@ViewData["Message"]</p>
+    <div class="form-group">
+        <label for="code">کد تاییدیه</label>
+        <input type="text" class="form-control" id="code" name="code">
+        <span id="" class="text text-danger">@ViewData["ErrorMessage"]</span>
+    </div>
+    <button type="submit" id="" class="btn btn-success mt-0">تایید </button>
+</form>
+

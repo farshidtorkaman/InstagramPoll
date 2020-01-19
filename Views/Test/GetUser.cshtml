@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "GetUser";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<h1>GetUser</h1>
+
+<form action="https://api.instagram.com/oauth/access_token" method="post">
+    <input type="hidden" value="75649c4f3a28422dae507dddf35e1505" name="client_id" class="form-control" />
+    <input type="hidden" value="087ba8dabeea40c09139379527c8f20e" name="client_secret" class="form-control" />
+    <input type="hidden" value="authorization_code" name="grant_type" class="form-control" />
+    <input type="hidden" value="http://localhost:52899/Test/GetUser" name="redirect_uri" class="form-control" />
+    <input type="hidden" value="@ViewData["Code"]" name="code" class="form-control" />
+    <input type="submit" />
+</form>
+
+<div class="server-results">
+
+</div>
+
+<script>
+    $.ajax({
+        url: "https://api.instagram.com/oauth/access_token",
+        type: "post",
+        data: {
+            client_id: "75649c4f3a28422dae507dddf35e1505",
+            client_secret: "087ba8dabeea40c09139379527c8f20e",
+            grant_type: "authorization_code",
+            redirect_uri: "http://localhost:52899/Test/GetUser",
+            code: @ViewData["Code"]
+        }
+	}).done(function(response){ //
+		$("#server-results").html(response);
+	});
+</script>
